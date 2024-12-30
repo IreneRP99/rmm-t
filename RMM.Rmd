@@ -1,0 +1,87 @@
+---
+title: "Análisis exploratorio de datos con mtcars"
+author: "Irene"
+date: "2024-12-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# Introducción
+
+En este análisis exploratorio de datos utilizamos el dataset `mtcars` para realizar un análisis detallado de sus características.
+
+- **Dataset utilizado:** `mtcars`.
+- **Objetivos del análisis:**
+  - Resumir y visualizar datos del dataset.
+  - Generar tablas estáticas e interactivas.
+  - Crear gráficos representativos de las relaciones entre variables.
+
+# Análisis de Datos
+
+## Carga del Dataset
+
+Cargamos el dataset `mtcars` incluido en R.
+
+```{r cargar-dataset}
+data(mtcars)
+df <- as.data.frame(mtcars)
+```
+
+## Resumen del Dataset
+
+Mostramos las primeras filas del dataset y un resumen estadístico de las variables.
+
+```{r resumen-dataset}
+# Primeras filas
+knitr::kable(head(df), caption = "Primeras filas del dataset")
+
+# Resumen estadístico
+df_summary <- summary(df)
+knitr::kable(as.data.frame(df_summary), caption = "Resumen Estadístico del Dataset")
+```
+
+## Tabla Interactiva
+
+Generamos una tabla interactiva utilizando la librería `DT` para explorar los datos.
+
+```{r tabla-interactiva, warning=FALSE, message=FALSE}
+library(DT)
+datatable(df, options = list(pageLength = 5), caption = "Tabla interactiva del dataset mtcars")
+```
+
+## Gráfico de Dispersión
+
+Creamos un gráfico de dispersión para visualizar la relación entre el consumo de combustible (`mpg`) y la potencia (`hp`).
+
+```{r grafico-dispersion, warning=FALSE, message=FALSE}
+library(ggplot2)
+ggplot(df, aes(x = hp, y = mpg)) +
+  geom_point(color = "blue", size = 3) +
+  labs(title = "Relación entre Potencia y Consumo de Combustible",
+       x = "Potencia (hp)",
+       y = "Consumo (mpg)") +
+  theme_minimal()
+```
+
